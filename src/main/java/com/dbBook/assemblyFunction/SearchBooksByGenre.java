@@ -13,5 +13,11 @@ public class SearchBooksByGenre implements Repository {
     public List<String> searchBooksByGenre(String input) {
         return book.getBookName(book.getBooksIdFromGenreId(genre.getGenreId(input)));
     }
+
+//    public static void main(String[] args) {
+//        SearchBooksByGenre q = new SearchBooksByGenre();
+//        System.out.println( q.searchBooksByGenre("Роман"));
+//
+//    }
 }
 
