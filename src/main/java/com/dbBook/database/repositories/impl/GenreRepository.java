@@ -30,7 +30,7 @@ public class GenreRepository implements Repository {
     public List<Integer> getGenreId(int book_id) {          //Have Test
         List<Integer> genreS_id = new ArrayList<>();
         try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select author_id from dbbook.book_genre where book_id = ?;");
+            PreparedStatement statement = connection.prepareStatement("select genre_id from dbbook.book_genre where book_id = ?;");
             statement.setInt(1, book_id);
             statement.execute();
             ResultSet rs = statement.executeQuery();

@@ -20,7 +20,7 @@ public class AuthorRepository implements Repository {
         }
         int id = 0;
         try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement("select * from dbbook.author where first_name = ? and  last_name = ? and  patronymic = ?;");
+            PreparedStatement statement = connection.prepareStatement("select * from dbbook.author where first_name = ? and  patronymic = ? and  last_name = ?;");
             statement.setString(1, nameLine[0]);
             statement.setString(2, nameLine[1]);
             statement.setString(3, nameLine[2]);
@@ -61,7 +61,7 @@ public class AuthorRepository implements Repository {
                 statement.execute();
                 ResultSet rs = statement.executeQuery();
                 while (rs.next()) {
-                    authorS.add(rs.getString("first_name") + " " + rs.getString("last_name") + " " + rs.getString("patronymic"));
+                    authorS.add(rs.getString("first_name") + " " + rs.getString("patronymic") + " " + rs.getString("last_name"));
                 }
             }
         } catch (SQLException e) {
@@ -69,10 +69,8 @@ public class AuthorRepository implements Repository {
         }
         return authorS;
     }
-
-    public static void main(String[] args) {
-        AuthorRepository q = new AuthorRepository();
-        q.getAuthorId(2);
-    }
-
 }
+
+
+
+

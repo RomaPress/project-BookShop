@@ -8,10 +8,11 @@
     <%--    <script src="../js/get.js"></script>--%>
     <script src="https://code.jquery.com/jquery-1.10.2.js"
             type="text/javascript"></script>
+
     <script>function getTwoValues() {
         var val1 = document.getElementById("first_line");
-        var val2 = document.getElementById("second_line");
         var line1 = val1.options[val1.selectedIndex].text;
+        var val2 = document.getElementById("second_line");
         var line2 = val2.options[val2.selectedIndex].text;
         $.ajax({
             type: "GET",
@@ -19,74 +20,58 @@
             dataType: "json",
             data: {line1: line1, line2: line2},
             success: function (data) {
-                document.getElementById("result").innerText = data.result;
+                var html = "";
+                var select = $('#answer');
+                $.each(data.result, function (i, obj) {
+                    html += '<li>' + obj.name + '</li>';
+                });
+                select.html(html)
             }
         });
     }</script>
 
 
+    <script>
+        function getFirstLine() {
+            var val1 = document.getElementById("first_line");
+            var line1 = val1.options[val1.selectedIndex].text;
+            $.ajax({
+                type: "GET",
+                url: "/BookShop_war/select_table",
+                dataType: "json",
+                data: {line1: line1},
+                success: function (data) {
+                    var html;
+                    var $select = $('#second_line');
+                    $.each(data.result, function (i, obj) {
+                        html += '<option value="' + obj.name + '">' + obj.name + '</option>';
+                    });
+                    $select.html(html)
+                }
+            });
+        }
+    </script>
 </head>
+
 <body>
+<label>
+    <select name="first_line" id="first_line">
+        <c:forEach var="i" items="${firstList}">
+            <option>
+                <c:out value="${i}"/>
+            </option>
+        </c:forEach>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<form method="post" action="<c:url value='/select_table'/>">
-
-    <c:forEach var="i" items="${firstList}">
-
-        <input type="radio" name="first_line" value="<c:out value="${i}"/>"><c:out value="${i}"/>
-        <br/>
-    </c:forEach>
-
-
-    <br/>
-    <input type="submit" value="Select" name="Select1"/>
-</form>
-
-<%----------------------------------------------------------------------------------------%>
-
-
-<%--<%--%>
-<%--    String sCommand = request.getParameter("first_line");--%>
-<%--    out.println(sCommand);--%>
-<%--%>--%>
-
-
-<%----------------------------------------------------------------------------------------%>
-<%--<form method="post" action="<c:url value='/select_table'/>">--%>
-
-<%--    <label>--%>
-<%--        <select name="first_line" id="first_line">--%>
-<%--            <c:forEach var="i" items="${firstList}">--%>
-<%--                <option>--%>
-<%--                    <c:out value="${i}"/>--%>
-<%--                </option>--%>
-<%--            </c:forEach>--%>
-
-<%--        </select>--%>
-<%--    </label>--%>
-<%--    <br/>--%>
-<%--    <input type="submit" value="Select" name="Select1"><br>--%>
-<%--</form>--%>
+    </select>
+</label>
+<br/>
+<input type="button" value="Select" name="Select1" onclick="getFirstLine()"> <br>
 
 
 <label>
-    <select name="second_line" id="second_line" selected="selected">
+    <select name="second_line" id="second_line">
 
-        <c:forEach var="i" items="${secondList}">
+        <c:forEach var="i" items="${result}">
             <option>
                 <c:out value="${i}"/>
             </option>
@@ -94,28 +79,14 @@
     </select>
 </label>
 <br/>
-<input type="button" value="Select" name="Select2" onclick="getTwoValues()">
+
+<input type="button" value="Select" name="Select2" onclick=" getTwoValues()">
 <br/>
+<%----------------------------------------------------------------------------------------%>
 
 
-<form method="get" action="<c:url value='/answer'/>">
-    <label>
-        <ul>
+<label id="answer"></label>
 
-
-            <c:out value="${result1}"/>
-            <c:out value="${result2}"/>
-
-
-            <c:forEach var="i" items="${answerList}">
-
-                <li> Answer: <c:out value="${i}"/></li>
-                <hr/>
-            </c:forEach>
-
-        </ul>
-    </label>
-</form>
 
 
 </body>

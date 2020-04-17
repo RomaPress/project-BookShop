@@ -16,7 +16,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class GetMainSelectServlet extends HttpServlet {
 
     private List<String> firstList;
-    private static final String index = "/WEB-INF/view/index.jsp";
+    private static final String index = "/WEB-INF/index.jsp";
 
     @Override
     public void init() throws ServletException {

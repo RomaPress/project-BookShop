@@ -12,8 +12,6 @@ public class SearchAuthorsByBook implements Repository {
     private BookRepository book = new BookRepository();
 
     public List<String> searchAuthorsByBook(String input) {
-
-
         return author.getAuthorsFullName(author.getAuthorId(book.getBookId(input)));
     }
 }

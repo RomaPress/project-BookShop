@@ -4,6 +4,8 @@ import com.dbBook.assemblyFunction.SearchAuthorsByBook;
 import com.dbBook.assemblyFunction.SearchBooksByAuthor;
 import com.dbBook.assemblyFunction.SearchBooksByGenre;
 import com.dbBook.assemblyFunction.SearchGenresByBook;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONStreamAware;
 
@@ -22,68 +24,80 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @WebServlet("/answer")
 public class GetAnswerServlet extends HttpServlet {
 
-    private static final String index = "/WEB-INF/view/index.jsp";
+    private static final String index = "/WEB-INF/index.jsp";
 
-//    private List<List<String>> answerList;
-private List<String> answerList;
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
 
         req.setCharacterEncoding("UTF8");
 
-
-
-        final String result1 = req.getParameter("line1");
-        System.out.println(result1);
-        final String result2 = req.getParameter("second_line");
-
-        doGet(req, resp);
     }
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        answerList = new CopyOnWriteArrayList<>();
-
+//        answerList = new CopyOnWriteArrayList<>();
 
         final String result1 = req.getParameter("line1");
-        final String result2 = req.getParameter("second_line");
-        answerList.add(result1);
-        answerList.add(result2);
-        req.setAttribute("answerList", answerList);
-        getServletContext().getRequestDispatcher(index).forward(req, resp);
+        final String result2 = req.getParameter("line2");
 
 
-//        answerList = new CopyOnWriteArrayList<List<String>>();
-//
-//        switch (result1) {
-//            case "Select books by author":
-//                SearchBooksByAuthor book_author = new SearchBooksByAuthor();
-//                answerList.add(book_author.searchBooksByAuthor(result2));
-//                req.setAttribute("answerList", answerList);
-//                getServletContext().getRequestDispatcher(index).forward(req, resp);
-//                break;
-//
-//            case "Select books by genre":
-//                SearchBooksByGenre book_genre = new SearchBooksByGenre();
-//                answerList.add(book_genre.searchBooksByGenre(result2));
-//                req.setAttribute("answerList", answerList);
-//                getServletContext().getRequestDispatcher(index).forward(req, resp);
-//                break;
-//
-//            case "Select genres by book":
-//                SearchGenresByBook genre_book = new SearchGenresByBook();
-//                answerList.add(genre_book.searchGenresByBook(result2));
-//                req.setAttribute("answerList", answerList);
-//                getServletContext().getRequestDispatcher(index).forward(req, resp);
-//                break;
-//
-//            case "Select authors by book":
-//                SearchAuthorsByBook author_book = new SearchAuthorsByBook();
-//                answerList.add(author_book.searchAuthorsByBook(result2));
-//                req.setAttribute("answerList", answerList);
-//                getServletContext().getRequestDispatcher(index).forward(req, resp);
-//                break;
-//        }
+        JsonObject jo = new JsonObject();
+        JsonArray cellarray = new JsonArray();
+        JsonObject cellobj = null;
+
+
+
+        switch (result1) {
+            case "Select books by author":
+                SearchBooksByAuthor bookAuthor = new SearchBooksByAuthor();
+
+                for (String a :bookAuthor.searchBooksByAuthor(result2)) {
+                    cellobj = new JsonObject();
+                    cellobj.addProperty("name", a);
+                    cellarray.add(cellobj);
+                }
+                jo.add("result",cellarray);
+                System.out.println(jo);
+                break;
+
+
+            case "Select books by genre":
+                SearchBooksByGenre bookGenre = new SearchBooksByGenre();
+
+                for (String a :bookGenre.searchBooksByGenre(result2)) {
+                    cellobj = new JsonObject();
+                    cellobj.addProperty("name", a);
+                    cellarray.add(cellobj);
+                }
+                jo.add("result",cellarray);
+                break;
+
+            case "Select genres by book":
+                SearchGenresByBook genreBook = new SearchGenresByBook();
+
+                for (String a :genreBook.searchGenresByBook(result2)) {
+                    cellobj = new JsonObject();
+                    cellobj.addProperty("name", a);
+                    cellarray.add(cellobj);
+                }
+                jo.add("result",cellarray);
+                break;
+
+            case "Select authors by book":
+                SearchAuthorsByBook authorBook = new SearchAuthorsByBook();
+
+                for (String a :authorBook.searchAuthorsByBook(result2)) {
+                    cellobj = new JsonObject();
+                    cellobj.addProperty("name", a);
+                    cellarray.add(cellobj);
+                }
+                jo.add("result",cellarray);
+                break;
+        }
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(jo.toString());
     }
 }
