@@ -1,11 +1,9 @@
 package com.dbBook.database.repositories.get;
 
 import com.dbBook.database.repositories.Repository;
-
 import java.sql.ResultSet;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,7 @@ import java.util.List;
 public class GetBooks implements Repository {
 
 
-    public List<String> getBooks () {                      //Have Test
+    public List<String> getBooks() {
         List<String> result = new ArrayList<>();
         try (Connection connection = getConnection()) {
 
@@ -27,7 +25,6 @@ public class GetBooks implements Repository {
         }
         return result;
     }
-
 
 
 }

@@ -1,7 +1,6 @@
 package com.dbBook.database.repositories.impl;
 
 import com.dbBook.database.repositories.Repository;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +10,7 @@ import java.util.List;
 
 public class GenreRepository implements Repository {
 
-    public int getGenreId(String nameGenre) {               //Have Test
+    public int getGenreId(String nameGenre) {
         int id = 0;
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select * from dbbook.genre where name_genre = ?;");
@@ -27,7 +26,7 @@ public class GenreRepository implements Repository {
         return id;
     }
 
-    public List<Integer> getGenreId(int book_id) {          //Have Test
+    public List<Integer> getGenreId(int book_id) {
         List<Integer> genreS_id = new ArrayList<>();
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select genre_id from dbbook.book_genre where book_id = ?;");
@@ -43,7 +42,7 @@ public class GenreRepository implements Repository {
         return genreS_id;
     }
 
-    public List<String> getGenreName(List<Integer> genreS_id) {   //Have Test
+    public List<String> getGenreName(List<Integer> genreS_id) {
         List<String> genreS = new ArrayList<>();
 
         try (Connection connection = getConnection()) {
@@ -61,5 +60,4 @@ public class GenreRepository implements Repository {
         }
         return genreS;
     }
-
 }

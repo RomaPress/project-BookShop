@@ -4,10 +4,30 @@
 <html>
 <head>
     <title>Title</title>
-    <%--    <script src="../js/lib/jquery-1.11.1.js"></script>--%>
-    <%--    <script src="../js/get.js"></script>--%>
+
     <script src="https://code.jquery.com/jquery-1.10.2.js"
             type="text/javascript"></script>
+
+    <script>
+        function getFirstLine() {
+            var val1 = document.getElementById("first_line");
+            var line1 = val1.options[val1.selectedIndex].text;
+            $.ajax({
+                type: "GET",
+                url: "/BookShop_war/select_table",
+                dataType: "json",
+                data: {line1: line1},
+                success: function (data) {
+                    var html;
+                    var $select = $('#second_line');
+                    $.each(data.result, function (i, obj) {
+                        html += '<option value="' + obj.name + '">' + obj.name + '</option>';
+                    });
+                    $select.html(html)
+                }
+            });
+        }
+    </script>
 
     <script>function getTwoValues() {
         var val1 = document.getElementById("first_line");
@@ -30,27 +50,6 @@
         });
     }</script>
 
-
-    <script>
-        function getFirstLine() {
-            var val1 = document.getElementById("first_line");
-            var line1 = val1.options[val1.selectedIndex].text;
-            $.ajax({
-                type: "GET",
-                url: "/BookShop_war/select_table",
-                dataType: "json",
-                data: {line1: line1},
-                success: function (data) {
-                    var html;
-                    var $select = $('#second_line');
-                    $.each(data.result, function (i, obj) {
-                        html += '<option value="' + obj.name + '">' + obj.name + '</option>';
-                    });
-                    $select.html(html)
-                }
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -64,30 +63,17 @@
 
     </select>
 </label>
-<br/>
+
 <input type="button" value="Select" name="Select1" onclick="getFirstLine()"> <br>
 
-
 <label>
-    <select name="second_line" id="second_line">
-
-        <c:forEach var="i" items="${result}">
-            <option>
-                <c:out value="${i}"/>
-            </option>
-        </c:forEach>
-    </select>
+    <select name="second_line" id="second_line"> </select>
 </label>
-<br/>
 
 <input type="button" value="Select" name="Select2" onclick=" getTwoValues()">
 <br/>
-<%----------------------------------------------------------------------------------------%>
-
 
 <label id="answer"></label>
-
-
 
 </body>
 </html>

@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AuthorRepository implements Repository {
 
-    public int getAuthorId(String fullName) {     //Have Test
+    public int getAuthorId(String fullName) {
         String[] nameLine = new String[3];
         int k = 0;
         for (String i : fullName.split(" ")) {
@@ -35,7 +35,7 @@ public class AuthorRepository implements Repository {
         return id;
     }
 
-    public List<Integer> getAuthorId(int book_id) {         //Have Test
+    public List<Integer> getAuthorId(int book_id) {
         List<Integer> authorS_id = new ArrayList<>();
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select author_id from dbbook.book_author where book_id = ?;");
@@ -51,7 +51,7 @@ public class AuthorRepository implements Repository {
         return authorS_id;
     }
 
-    public List<String> getAuthorsFullName(List<Integer> authorS_id) {   //Have Test
+    public List<String> getAuthorsFullName(List<Integer> authorS_id) {
         List<String> authorS = new ArrayList<>();
 
         try (Connection connection = getConnection()) {

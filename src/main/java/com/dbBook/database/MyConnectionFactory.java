@@ -12,7 +12,6 @@ public class MyConnectionFactory {
 
     public static Connection getConnection() {
         try {
-
             return DriverManager.getConnection(DB_URL, USER_NAME, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();

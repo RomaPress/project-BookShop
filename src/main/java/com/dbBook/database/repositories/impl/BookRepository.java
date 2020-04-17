@@ -1,8 +1,6 @@
 package com.dbBook.database.repositories.impl;
 
 import com.dbBook.database.repositories.Repository;
-import com.sun.org.apache.xerces.internal.dom.PSVIAttrNSImpl;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +24,7 @@ public class BookRepository implements Repository {
         return id;
     }
 
-    public List<Integer> getBooksIdFromAuthorId(int author_id) {  //Have Test
+    public List<Integer> getBooksIdFromAuthorId(int author_id) {
         List<Integer> bookS_id = new ArrayList<>();
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select book_id from dbbook.book_author where author_id = ?;");
@@ -42,7 +40,7 @@ public class BookRepository implements Repository {
         return bookS_id;
     }
 
-    public List<Integer> getBooksIdFromGenreId(int genre_id) {  //Have Test
+    public List<Integer> getBooksIdFromGenreId(int genre_id) {
         List<Integer> bookS_id = new ArrayList<>();
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select book_id from dbbook.book_genre where genre_id = ?;");
@@ -58,7 +56,7 @@ public class BookRepository implements Repository {
         return bookS_id;
     }
 
-    public List<String> getBookName(List<Integer> bookS_id) {   //Have Test
+    public List<String> getBookName(List<Integer> bookS_id) {
         List<String> bookS = new ArrayList<>();
 
         try (Connection connection = getConnection()) {
@@ -76,6 +74,4 @@ public class BookRepository implements Repository {
         }
         return bookS;
     }
-
-
 }
