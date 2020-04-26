@@ -1,6 +1,7 @@
 package com.dbBook.database.repositories.get;
 
 import com.dbBook.database.repositories.Repository;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ import java.util.List;
 
 public class GetAuthors implements Repository {
 
-    public List<String> getAuthors () {                      //Have Test
+    public List<String> getAuthors() {
         List<String> result = new ArrayList<>();
         try (Connection connection = getConnection()) {
 

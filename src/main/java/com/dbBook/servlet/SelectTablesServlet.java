@@ -1,10 +1,11 @@
 package com.dbBook.servlet;
 
-import com.google.gson.*;
 import com.dbBook.database.repositories.get.GetAuthors;
 import com.dbBook.database.repositories.get.GetBooks;
 import com.dbBook.database.repositories.get.GetGenres;
-import javax.servlet.ServletException;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,39 +24,39 @@ public class SelectTablesServlet extends HttpServlet {
         String result1 = req.getParameter("line1");
 
         JsonObject jo = new JsonObject();
-        JsonArray cellarray = new JsonArray();
-        JsonObject cellobj = null;
+        JsonArray array = new JsonArray();
+        JsonObject object;
 
         switch (result1) {
             case "Select books by author":
                 GetAuthors authors = new GetAuthors();
                 for (String a :authors.getAuthors()) {
-                    cellobj = new JsonObject();
-                    cellobj.addProperty("name", a);
-                    cellarray.add(cellobj);
+                    object = new JsonObject();
+                    object.addProperty("name", a);
+                    array.add(object);
                 }
-                jo.add("result",cellarray);
+                jo.add("result", array);
                 break;
 
             case "Select books by genre":
                 GetGenres genres = new GetGenres();
                 for (String a :genres.getGenres()) {
-                    cellobj = new JsonObject();
-                    cellobj.addProperty("name", a);
-                    cellarray.add(cellobj);
+                    object = new JsonObject();
+                    object.addProperty("name", a);
+                    array.add(object);
                 }
-                jo.add("result",cellarray);
+                jo.add("result", array);
                 break;
 
             case "Select genres by book":
             case "Select authors by book":
                 GetBooks books = new GetBooks();
                 for (String a :books.getBooks()) {
-                    cellobj = new JsonObject();
-                    cellobj.addProperty("name", a);
-                    cellarray.add(cellobj);
+                    object = new JsonObject();
+                    object.addProperty("name", a);
+                    array.add(object);
                 }
-                jo.add("result",cellarray);
+                jo.add("result", array);
             break;
         }
         resp.setContentType("application/json");

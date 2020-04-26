@@ -1,5 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 
 <html>
 <head>
@@ -17,8 +17,9 @@
                 url: "/BookShop_war/select_table",
                 dataType: "json",
                 data: {line1: line1},
+
                 success: function (data) {
-                    var html;
+                    var html = "";
                     var $select = $('#second_line');
                     $.each(data.result, function (i, obj) {
                         html += '<option value="' + obj.name + '">' + obj.name + '</option>';

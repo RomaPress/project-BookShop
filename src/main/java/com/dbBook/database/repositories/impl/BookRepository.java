@@ -1,14 +1,17 @@
 package com.dbBook.database.repositories.impl;
 
 import com.dbBook.database.repositories.Repository;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BookRepository implements Repository {
 
-    public int getBookId(String nameBook) {  //Have Test
+    public int getBookId(String nameBook) {  
         int id = 0;
         try (Connection connection = getConnection()) {
             PreparedStatement statement = connection.prepareStatement("select * from dbbook.book where name_book = ?;");
@@ -56,7 +59,7 @@ public class BookRepository implements Repository {
         return bookS_id;
     }
 
-    public List<String> getBookName(List<Integer> bookS_id) {
+    public List<String> getBooksName(List<Integer> bookS_id) {
         List<String> bookS = new ArrayList<>();
 
         try (Connection connection = getConnection()) {
